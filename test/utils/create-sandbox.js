@@ -37,7 +37,7 @@ export default async (options = {}) => {
   try {
     const sandboxId = shortid.generate();
     const sandboxPath = join(__dirname, constants.sandboxCampRelativePath, sandboxId);
-    await fs.mkdirAsync(sandboxPath);
+    await fs.mkdirsAsync(sandboxPath);
     sandbox.path = sandboxPath;
     sandbox.remove = createCleanMethod(sandboxPath);
 
@@ -45,7 +45,7 @@ export default async (options = {}) => {
       sandbox.isMaster = true;
       await generatePackageJson(sandboxPath, sandboxId);
       const nodeModulesPath = join(sandboxPath, 'node_modules');
-      await fs.mkdirAsync(nodeModulesPath);
+      await fs.mkdirsAsync(nodeModulesPath);
     }
 
     if (options.structure) {
