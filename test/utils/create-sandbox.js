@@ -19,15 +19,26 @@ const generatePackageJson = async (sandboxPath, sandboxId) => {
   };
 
   const path = join(sandboxPath, 'package.json');
-
   await fs.writeJsonAsync(path, pkg);
+};
+
+const generateSymlyJson = async (sandboxPath, sandboxId) => {
+  const symly = {
+    name: sandboxId,
+    prefix: `@${sandboxId}`
+  };
+
+  const path = join(sandboxPath, 'symly.json');
+  await fs.writeJsonAsync(path, symly);
 };
 
 export default async (options = {}) => {
 
   const defaultOptions = {
-    isMaster: true, // will create package.json and node_modules
-    structure: null // will copy files from fixtures/structures/[structure_name]
+    isMaster: true,
+    structure: null,
+    withoutSymly: false,
+    withoutPkg: false
   };
 
   options = { ...defaultOptions, ...options };
@@ -38,12 +49,22 @@ export default async (options = {}) => {
     const sandboxId = shortid.generate();
     const sandboxPath = join(__dirname, constants.sandboxCampRelativePath, sandboxId);
     await fs.mkdirsAsync(sandboxPath);
+    sandbox.id = sandboxId;
     sandbox.path = sandboxPath;
     sandbox.remove = createCleanMethod(sandboxPath);
 
     if (options.isMaster) {
       sandbox.isMaster = true;
-      await generatePackageJson(sandboxPath, sandboxId);
+
+      if (!options.withoutPkg) {
+        await generatePackageJson(sandboxPath, sandboxId);
+      }
+
+      if (!options.withoutSymly) {
+        await generateSymlyJson(sandboxPath, sandboxId);
+        sandbox.isMaster = false;
+      }
+
       const nodeModulesPath = join(sandboxPath, 'node_modules');
       await fs.mkdirsAsync(nodeModulesPath);
     }
