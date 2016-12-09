@@ -1,7 +1,7 @@
 import test from 'ava';
 import Inpack from './../';
 
-test('Should initialize inpack correct', t => {
+test('Should construct inpack correct', t => {
 
   t.notThrows(() => {
     const inpack = new Inpack();
