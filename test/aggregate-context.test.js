@@ -24,7 +24,7 @@ test('Should aggregate directory context', async t => {
     name: sandbox.id,
     main: 'index.js'
   });
-  t.deepEqual(context.symly, {
+  t.deepEqual(context.inpack, {
     name: sandbox.id,
     prefix: `@${sandbox.id}`
   });
@@ -45,7 +45,7 @@ test('Should detect master project if directory is not master', async t => {
   t.is(context.isChild, true);
   t.is(context.directory, deepPath);
   t.is(context.masterPath, sandbox.path);
-  t.is(context.symly, null);
+  t.is(context.inpack, null);
   t.is(context.pkg, null);
 
   await sandbox.remove();
@@ -61,7 +61,7 @@ test('Should aggregate correct context if master does not found', async t => {
   t.is(context.directory, tmp);
   t.is(context.masterPath, null);
   t.is(context.pkg, null);
-  t.is(context.symly, null);
+  t.is(context.inpack, null);
 
   t.pass();
 

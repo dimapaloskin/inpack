@@ -1,12 +1,12 @@
 import test from 'ava';
-import Symly from './../';
+import Inpack from './../';
 
-test('Should initialize symly correct', t => {
+test('Should initialize inpack correct', t => {
 
   t.notThrows(() => {
-    const symly = new Symly();
-    t.true(symly instanceof Symly, 'should be an instance of Symple class');
-    t.is(symly.workingDir, process.cwd(), 'workingDir should be equal process.cwd()');
+    const inpack = new Inpack();
+    t.true(inpack instanceof Inpack, 'should be an instance of Symple class');
+    t.is(inpack.workingDir, process.cwd(), 'workingDir should be equal process.cwd()');
 
   });
 

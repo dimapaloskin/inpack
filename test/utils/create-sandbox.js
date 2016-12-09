@@ -22,14 +22,14 @@ const generatePackageJson = async (sandboxPath, sandboxId) => {
   await fs.writeJsonAsync(path, pkg);
 };
 
-const generateSymlyJson = async (sandboxPath, sandboxId) => {
-  const symly = {
+const generateInpackJson = async (sandboxPath, sandboxId) => {
+  const inpack = {
     name: sandboxId,
     prefix: `@${sandboxId}`
   };
 
-  const path = join(sandboxPath, 'symly.json');
-  await fs.writeJsonAsync(path, symly);
+  const path = join(sandboxPath, 'inpack.json');
+  await fs.writeJsonAsync(path, inpack);
 };
 
 export default async (options = {}) => {
@@ -37,7 +37,7 @@ export default async (options = {}) => {
   const defaultOptions = {
     isMaster: true,
     structure: null,
-    withoutSymly: false,
+    withoutInpack: false,
     withoutPkg: false
   };
 
@@ -60,9 +60,8 @@ export default async (options = {}) => {
         await generatePackageJson(sandboxPath, sandboxId);
       }
 
-      if (!options.withoutSymly) {
-        await generateSymlyJson(sandboxPath, sandboxId);
-        sandbox.isMaster = false;
+      if (!options.withoutInpack) {
+        await generateInpackJson(sandboxPath, sandboxId);
       }
 
       const nodeModulesPath = join(sandboxPath, 'node_modules');

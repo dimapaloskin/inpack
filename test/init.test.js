@@ -1,20 +1,20 @@
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import Symly from './../lib';
+import Inpack from './../lib';
 
 test('should throw exception if incorrect directory passed', async t => {
 
-  const symly = new Symly();
+  const inpack = new Inpack();
 
-  const failedInit = symly.init();
+  const failedInit = inpack.init();
   const error = await t.throws(failedInit);
   t.is(error.message, 'Incorrect options passed: undefined');
 });
 
-test('should initialize new symply project', async t => {
+test('should initialize new inpack project', async t => {
 
   const sandbox = await createSandbox({
-    withoutSymly: true
+    withoutInpack: true
   });
 
   sandbox.remove();
