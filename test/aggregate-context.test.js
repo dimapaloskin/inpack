@@ -21,7 +21,7 @@ test('Should throw exception if received path is not directory', async t => {
   const error = await t.throws(promise);
   t.is(error.message, 'Passed path is not directory', 'unexpected error');
 
-  sandbox.remove();
+  await sandbox.remove();
 });
 
 test('Should aggregate directory context', async t => {

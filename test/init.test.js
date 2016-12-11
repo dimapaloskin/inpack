@@ -24,7 +24,7 @@ test('should throw exception if incorrect directory does not contain package.jso
   const error = await t.throws(failedInit);
   t.is(error.message, 'Can not be initialized. Directory must contain package.json');
 
-  sandbox.remove();
+  await sandbox.remove();
 });
 
 test('should initialize new inpack project', async t => {
@@ -42,8 +42,7 @@ test('should initialize new inpack project', async t => {
   const inpackJsonBody = await fs.readJsonAsync(result.configPath);
   t.deepEqual(inpackJsonBody, result.inpack);
 
-  sandbox.remove();
-  t.pass();
+  await sandbox.remove();
 });
 
 test('should initialize new inpack project with passed options', async t => {
@@ -67,7 +66,7 @@ test('should initialize new inpack project with passed options', async t => {
   const inpackJsonBody = await fs.readJsonAsync(result.configPath);
   t.deepEqual(inpackJsonBody, result.inpack);
 
-  sandbox.remove();
+  await sandbox.remove();
 });
 
 test('should initialize new inpack project without prefix', async t => {
@@ -92,7 +91,7 @@ test('should initialize new inpack project without prefix', async t => {
   const inpackJsonBody = await fs.readJsonAsync(result.configPath);
   t.deepEqual(inpackJsonBody, result.inpack);
 
-  sandbox.remove();
+  await sandbox.remove();
 });
 
 test('should initialize new inpack project and add postinstall', async t => {
@@ -113,7 +112,7 @@ test('should initialize new inpack project and add postinstall', async t => {
   const pkg = await fs.readJsonAsync(join(sandbox.path, 'package.json'));
   t.is(pkg.postinstall, 'inpack link');
 
-  sandbox.remove();
+  await sandbox.remove();
 });
 
 test('should initialize new inpack project and modify postinstall', async t => {
@@ -139,5 +138,5 @@ test('should initialize new inpack project and modify postinstall', async t => {
   const pkg = await fs.readJsonAsync(pkgPath);
   t.is(pkg.postinstall, 'inpack link && echo "postinstall"');
 
-  sandbox.remove();
+  await sandbox.remove();
 });

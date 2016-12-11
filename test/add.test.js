@@ -17,7 +17,7 @@ test('Should throw error if master project is not found', async t => {
 
 });
 
-test('Should throw error if master project is not found', async t => {
+test('Should add new inpack module from the master project', async t => {
 
   const sandbox = await createSandbox({
     structure: 'deep',
@@ -25,8 +25,7 @@ test('Should throw error if master project is not found', async t => {
   });
 
   const inpack = new Inpack();
-  const error = inpack.add(sandbox.path, 'level1');
 
-  t.pass();
-  sandbox.remove();
+
+  await sandbox.remove();
 });
