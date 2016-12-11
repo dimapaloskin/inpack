@@ -64,7 +64,7 @@ test('Should detect master project if passed directory is not master', async t =
   await sandbox.remove();
 });
 
-test('Should aggregate correct context if master does not found', async t => {
+test('Should aggregate correct context if master is not found', async t => {
 
   const tmp = tmpdir();
   const context = await aggregateContext(tmp);

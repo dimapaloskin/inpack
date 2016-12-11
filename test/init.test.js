@@ -13,7 +13,7 @@ test('should throw exception if incorrect directory passed', async t => {
   t.is(error.message, 'Incorrect directory passed: undefined');
 });
 
-test('should throw exception if incorrect directory does not contains package.json', async t => {
+test('should throw exception if incorrect directory does not contain package.json', async t => {
 
   const sandbox = await createSandbox({
     isMaster: false
@@ -22,7 +22,7 @@ test('should throw exception if incorrect directory does not contains package.js
   const inpack = new Inpack();
   const failedInit = inpack.init(sandbox.path);
   const error = await t.throws(failedInit);
-  t.is(error.message, 'Can not be initialized. Directory must contains package.json');
+  t.is(error.message, 'Can not be initialized. Directory must contain package.json');
 
   sandbox.remove();
 });
