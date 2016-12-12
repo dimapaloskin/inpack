@@ -6,6 +6,31 @@ import Inpack from './../lib';
 import fs from './../lib/utils/fs';
 import { moduleSrcDirName, inpackConfigName } from './../lib/constants';
 
+const compileModuleInfo = async (sandboxPath, moduleName, mainFile = 'index.js') => {
+
+  // absolute module path (technically it is should support symlinks too)
+  const modulePath = join(sandboxPath, moduleName);
+  // absolute path to module that will created in the node_modules directory
+  const nodeModulePath = join(sandboxPath, 'node_modules', moduleName);
+  const realDirectoryStat = await fs.statAsync(modulePath);
+  const mainFileStat = await fs.statAsync(join(modulePath, mainFile));
+  const nodeModuleDirectoryStat = await fs.statAsync(nodeModulePath);
+  const symlink = await fs.readlinkAsync(join(nodeModulePath, moduleSrcDirName));
+  const pkg = await fs.readJsonAsync(join(nodeModulePath, 'package.json'));
+  const inpack = await fs.readJsonAsync(join(sandboxPath, inpackConfigName));
+
+  return {
+    modulePath,
+    nodeModulePath,
+    realDirectoryStat,
+    mainFileStat,
+    nodeModuleDirectoryStat,
+    symlink,
+    pkg,
+    inpack
+  };
+};
+
 test('Should throw error if master project is not found', async t => {
 
   const tmp = tmpdir();
@@ -45,27 +70,20 @@ test('Should create and add new inpack module in the master prject when "create"
     create: true
   });
 
-  const modulePath = join(sandbox.path, moduleName);
-  const nodeModulePath = join(sandbox.path, 'node_modules', moduleName);
-  const moduleDirectoryStat = await fs.statAsync(modulePath);
-  const mainFileStat = await fs.statAsync(join(modulePath, 'index.js'));
-  const nodeModuleStat = await fs.statAsync(nodeModulePath);
-  const linkPath = await fs.readlinkAsync(join(nodeModulePath, moduleSrcDirName));
-  const pkgBody = await fs.readJsonAsync(join(nodeModulePath, 'package.json'));
-  const inpackJson = await fs.readJsonAsync(join(sandbox.path, inpackConfigName));
+  const compiled = await compileModuleInfo(sandbox.path, moduleName)
 
-  t.true(moduleDirectoryStat.isDirectory());
-  t.true(mainFileStat.isFile());
-  t.true(nodeModuleStat.isDirectory());
-  t.is(linkPath, resolve(modulePath));
+  t.true(compiled.realDirectoryStat.isDirectory());
+  t.true(compiled.mainFileStat.isFile());
+  t.true(compiled.nodeModuleDirectoryStat.isDirectory());
+  t.is(compiled.symlink, resolve(compiled.modulePath));
 
-  t.deepEqual(pkgBody, {
+  t.deepEqual(compiled.pkg, {
     name: moduleName,
     main: join(moduleSrcDirName, 'index.js'),
     inpack: true
   });
 
-  t.deepEqual(inpackJson.modules, {
+  t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
       path: moduleName,
       package: {
@@ -89,31 +107,24 @@ test('Should create and add new inpack module outside master project. should not
 
   const moduleName = 'level1';
   const inpack = new Inpack();
-  await inpack.add(join(sandbox.path, moduleName));
 
   await inpack.add(join(sandbox.path, moduleName));
+  await inpack.add(join(sandbox.path, moduleName));
 
-  const modulePath = join(sandbox.path, moduleName);
-  const nodeModulePath = join(sandbox.path, 'node_modules', moduleName);
-  const moduleDirectoryStat = await fs.statAsync(modulePath);
-  const mainFileStat = await fs.statAsync(join(modulePath, 'index.js'));
-  const nodeModuleStat = await fs.statAsync(nodeModulePath);
-  const linkPath = await fs.readlinkAsync(join(nodeModulePath, moduleSrcDirName));
-  const pkgBody = await fs.readJsonAsync(join(nodeModulePath, 'package.json'));
-  const inpackJson = await fs.readJsonAsync(join(sandbox.path, inpackConfigName));
+  const compiled = await compileModuleInfo(sandbox.path, moduleName);
 
-  t.true(moduleDirectoryStat.isDirectory());
-  t.true(mainFileStat.isFile());
-  t.true(nodeModuleStat.isDirectory());
-  t.is(linkPath, resolve(modulePath));
+  t.true(compiled.realDirectoryStat.isDirectory());
+  t.true(compiled.mainFileStat.isFile());
+  t.true(compiled.nodeModuleDirectoryStat.isDirectory());
+  t.is(compiled.symlink, resolve(compiled.modulePath));
 
-  t.deepEqual(pkgBody, {
+  t.deepEqual(compiled.pkg, {
     name: moduleName,
     main: join(moduleSrcDirName, 'index.js'),
     inpack: true
   });
 
-  t.deepEqual(inpackJson.modules, {
+  t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
       path: moduleName,
       package: {
@@ -141,27 +152,20 @@ test('Should rewrite existing module with custom main file name', async t => {
     main: 'component.js'
   });
 
-  const modulePath = join(sandbox.path, moduleName);
-  const nodeModulePath = join(sandbox.path, 'node_modules', moduleName);
-  const moduleDirectoryStat = await fs.statAsync(modulePath);
-  const mainFileStat = await fs.statAsync(join(modulePath, 'component.js'));
-  const nodeModuleStat = await fs.statAsync(nodeModulePath);
-  const linkPath = await fs.readlinkAsync(join(nodeModulePath, moduleSrcDirName));
-  const pkgBody = await fs.readJsonAsync(join(nodeModulePath, 'package.json'));
-  const inpackJson = await fs.readJsonAsync(join(sandbox.path, inpackConfigName));
+  const compiled = await compileModuleInfo(sandbox.path, moduleName, 'component.js');
 
-  t.true(moduleDirectoryStat.isDirectory());
-  t.true(mainFileStat.isFile());
-  t.true(nodeModuleStat.isDirectory());
-  t.is(linkPath, resolve(modulePath));
+  t.true(compiled.realDirectoryStat.isDirectory());
+  t.true(compiled.mainFileStat.isFile());
+  t.true(compiled.nodeModuleDirectoryStat.isDirectory());
+  t.is(compiled.symlink, resolve(compiled.modulePath));
 
-  t.deepEqual(pkgBody, {
+  t.deepEqual(compiled.pkg, {
     name: moduleName,
     main: join(moduleSrcDirName, 'component.js'),
     inpack: true
   });
 
-  t.deepEqual(inpackJson.modules, {
+  t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
       path: moduleName,
       package: {
