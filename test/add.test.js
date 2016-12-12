@@ -126,3 +126,51 @@ test('Should create and add new inpack module outside master project. should not
 
   await sandbox.remove();
 });
+
+test('Should rewrite existing module with custom main file name', async t => {
+  const sandbox = await createSandbox({
+    structure: 'with-existing-modules',
+    isMaster: true,
+    noPrefix: true
+  });
+
+  const moduleName = 'existing-module';
+  const inpack = new Inpack();
+
+  await inpack.add(join(sandbox.path), moduleName, {
+    main: 'component.js'
+  });
+
+  const modulePath = join(sandbox.path, moduleName);
+  const nodeModulePath = join(sandbox.path, 'node_modules', moduleName);
+  const moduleDirectoryStat = await fs.statAsync(modulePath);
+  const mainFileStat = await fs.statAsync(join(modulePath, 'component.js'));
+  const nodeModuleStat = await fs.statAsync(nodeModulePath);
+  const linkPath = await fs.readlinkAsync(join(nodeModulePath, moduleSrcDirName));
+  const pkgBody = await fs.readJsonAsync(join(nodeModulePath, 'package.json'));
+  const inpackJson = await fs.readJsonAsync(join(sandbox.path, inpackConfigName));
+
+  t.true(moduleDirectoryStat.isDirectory());
+  t.true(mainFileStat.isFile());
+  t.true(nodeModuleStat.isDirectory());
+  t.is(linkPath, resolve(modulePath));
+
+  t.deepEqual(pkgBody, {
+    name: moduleName,
+    main: join(moduleSrcDirName, 'component.js'),
+    inpack: true
+  });
+
+  t.deepEqual(inpackJson.modules, {
+    [moduleName]: {
+      path: moduleName,
+      package: {
+        name: moduleName,
+        main: join(moduleSrcDirName, 'component.js'),
+        inpack: true
+      }
+    }
+  });
+
+  await sandbox.remove();
+});
