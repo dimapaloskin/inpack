@@ -6,12 +6,12 @@ import Inpack from './../lib';
 import fs from './../lib/utils/fs';
 import { moduleSrcDirName, inpackConfigName } from './../lib/constants';
 
-const compileModuleInfo = async (sandboxPath, moduleName, mainFile = 'index.js') => {
+const compileModuleInfo = async (sandboxPath, moduleName, mainFile = 'index.js', prefix = '') => {
 
   // absolute module path (technically it is should support symlinks too)
   const modulePath = join(sandboxPath, moduleName);
   // absolute path to module that will created in the node_modules directory
-  const nodeModulePath = join(sandboxPath, 'node_modules', moduleName);
+  const nodeModulePath = join(sandboxPath, 'node_modules', `${prefix}${moduleName}`);
   const realDirectoryStat = await fs.statAsync(modulePath);
   const mainFileStat = await fs.statAsync(join(modulePath, mainFile));
   const nodeModuleDirectoryStat = await fs.statAsync(nodeModulePath);
@@ -171,6 +171,49 @@ test('Should rewrite existing module with custom main file name', async t => {
       path: moduleName,
       package: {
         name: moduleName,
+        main: join(moduleSrcDirName, 'component.js'),
+        inpack: true
+      }
+    }
+  });
+
+  await sandbox.remove();
+});
+
+test('Should add correct  module with prefix', async t => {
+  const sandbox = await createSandbox({
+    structure: 'with-existing-modules',
+    isMaster: true
+  });
+
+  const moduleName = 'existing-module';
+  const inpack = new Inpack();
+
+  await inpack.add(join(sandbox.path), moduleName, {
+    main: 'component.js'
+  });
+
+  const prefix = `@${sandbox.id}/`;
+  const compiled = await compileModuleInfo(sandbox.path, moduleName, 'component.js', prefix);
+
+  t.true(compiled.realDirectoryStat.isDirectory());
+  t.true(compiled.mainFileStat.isFile());
+  t.true(compiled.nodeModuleDirectoryStat.isDirectory());
+  t.is(compiled.symlink, resolve(compiled.modulePath));
+
+  const prefixedModuleName = `${prefix}${moduleName}`;
+
+  t.deepEqual(compiled.pkg, {
+    name: prefixedModuleName,
+    main: join(moduleSrcDirName, 'component.js'),
+    inpack: true
+  });
+
+  t.deepEqual(compiled.inpack.modules, {
+    [moduleName]: {
+      path: moduleName,
+      package: {
+        name: prefixedModuleName,
         main: join(moduleSrcDirName, 'component.js'),
         inpack: true
       }
