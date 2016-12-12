@@ -11,6 +11,19 @@ test('Should throw exception if receive incorrect working directory', async t =>
   t.is(error.message, 'Incorrect directory passed', 'unexpected error');
 });
 
+test('Should throw exception if passed directory is not exists', async t => {
+
+  const sandbox = await createSandbox({
+    structure: 'one-dep'
+  });
+
+  const promise = aggregateContext(join(sandbox.path, 'directory-is-not-exist'));
+  const error = await t.throws(promise);
+  t.is(error.message, 'Passed directory does not exist', 'unexpected error');
+
+  await sandbox.remove();
+});
+
 test('Should throw exception if received path is not directory', async t => {
 
   const sandbox = await createSandbox({
@@ -19,7 +32,7 @@ test('Should throw exception if received path is not directory', async t => {
 
   const promise = aggregateContext(join(sandbox.path, 'index.js'));
   const error = await t.throws(promise);
-  t.is(error.message, 'Passed path is not directory', 'unexpected error');
+  t.is(error.message, 'Passed path is not a directory', 'unexpected error');
 
   await sandbox.remove();
 });
@@ -39,7 +52,7 @@ test('Should aggregate directory context', async t => {
   });
   t.deepEqual(context.inpack, {
     name: sandbox.id,
-    prefix: `@${sandbox.id}`
+    prefix: `@${sandbox.id}/`
   });
 
   await sandbox.remove();
@@ -58,8 +71,8 @@ test('Should detect master project if passed directory is not master', async t =
   t.is(context.isChild, true);
   t.is(context.directory, deepPath);
   t.is(context.masterPath, sandbox.path);
-  t.is(context.inpack, null);
-  t.is(context.pkg, null);
+  t.deepEqual(context.inpack, { name: sandbox.id, prefix: `@${sandbox.id}/` });
+  t.deepEqual(context.pkg, { name: sandbox.id, main: 'index.js' });
 
   await sandbox.remove();
 });

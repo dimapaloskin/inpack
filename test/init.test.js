@@ -27,7 +27,7 @@ test('should throw exception if incorrect directory does not contain package.jso
   await sandbox.remove();
 });
 
-test('should initialize new inpack project', async t => {
+test('Should initialize new inpack project', async t => {
 
   const sandbox = await createSandbox({
     withoutInpack: true
@@ -45,7 +45,7 @@ test('should initialize new inpack project', async t => {
   await sandbox.remove();
 });
 
-test('should initialize new inpack project with passed options', async t => {
+test('Should initialize new inpack project with passed options', async t => {
 
   const sandbox = await createSandbox({
     withoutInpack: true
