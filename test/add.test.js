@@ -89,9 +89,7 @@ test('Should create and add new inpack module outside master project. should not
 
   const moduleName = 'level1';
   const inpack = new Inpack();
-  await inpack.add(join(sandbox.path, moduleName), {
-    create: true
-  });
+  await inpack.add(join(sandbox.path, moduleName));
 
   await inpack.add(join(sandbox.path, moduleName));
 
