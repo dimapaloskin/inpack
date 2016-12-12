@@ -97,7 +97,7 @@ test('Should create and add new inpack module in the master prject when "create"
   await sandbox.remove();
 });
 
-test('Should create and add new inpack module outside master project. should not relink module after second launch.', async t => {
+test('Should create and add new inpack module outside master project. should add module the same module twice without errors', async t => {
 
   const sandbox = await createSandbox({
     structure: 'deep',
@@ -109,6 +109,7 @@ test('Should create and add new inpack module outside master project. should not
   const inpack = new Inpack();
 
   await inpack.add(join(sandbox.path, moduleName));
+  // tests adding the same module several times
   await inpack.add(join(sandbox.path, moduleName));
 
   const compiled = await compileModuleInfo(sandbox.path, moduleName);
