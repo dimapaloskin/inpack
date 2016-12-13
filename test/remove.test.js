@@ -6,6 +6,44 @@ import fs from './../lib/utils/fs';
 
 const { basename, join } = posix;
 
+test('Should throw error if module was not added', async t => {
+
+  const sandbox = await createSandbox({
+    structure: 'deep',
+    isMaster: true,
+    noPrefix: false
+  });
+
+  const moduleRelativePath = 'level1/level2';
+  const moduleName = basename(moduleRelativePath);
+
+  const inpack = new Inpack();
+
+  const error = await t.throws(inpack.remove(sandbox.path, moduleName));
+  t.is(error.message, `${moduleName} was not found in the inpack configuration file. Use --force options to ignore it`);
+
+  sandbox.remove();
+});
+
+test('Should try to remove module if --force passed', async t => {
+
+  const sandbox = await createSandbox({
+    structure: 'deep',
+    isMaster: true,
+    noPrefix: false
+  });
+
+  const moduleRelativePath = 'level1/level2';
+  const moduleName = basename(moduleRelativePath);
+
+  const inpack = new Inpack();
+
+  const result = await inpack.remove(sandbox.path, moduleName, { force: true });
+  t.is(result.name, moduleName);
+
+  sandbox.remove();
+});
+
 test('Should remove module by name from master directory', async t => {
 
   const sandbox = await createSandbox({
