@@ -1,6 +1,7 @@
 import { tmpdir } from 'os';
 import { join, resolve } from 'path';
 import test from 'ava';
+import slash from 'slash';
 import createSandbox from './utils/create-sandbox';
 import Inpack from './../lib';
 import compileModuleInfo from './utils/compile-module-info';
@@ -54,17 +55,17 @@ test('Should create and add new inpack module in the master prject when "create"
 
   t.deepEqual(compiled.pkg, {
     name: moduleName,
-    main: join(moduleSrcDirName, 'index.js'),
+    main: slash(join(moduleSrcDirName, 'index.js')),
     inpack: true
   });
 
   t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
-      path: moduleName,
+      path: slash(moduleName),
       name: moduleName,
       package: {
         name: moduleName,
-        main: join(moduleSrcDirName, 'index.js'),
+        main: slash(join(moduleSrcDirName, 'index.js')),
         inpack: true
       }
     }
@@ -99,17 +100,17 @@ test('Should create and add new inpack module outside master project. should add
 
   t.deepEqual(compiled.pkg, {
     name: moduleName,
-    main: join(moduleSrcDirName, 'index.js'),
+    main: slash(join(moduleSrcDirName, 'index.js')),
     inpack: true
   });
 
   t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
-      path: moduleName,
+      path: slash(moduleName),
       name: moduleName,
       package: {
         name: moduleName,
-        main: join(moduleSrcDirName, 'index.js'),
+        main: slash(join(moduleSrcDirName, 'index.js')),
         inpack: true
       }
     }
@@ -141,17 +142,17 @@ test('Should rewrite existing module with custom main file name', async t => {
 
   t.deepEqual(compiled.pkg, {
     name: moduleName,
-    main: join(moduleSrcDirName, 'component.js'),
+    main: slash(join(moduleSrcDirName, 'component.js')),
     inpack: true
   });
 
   t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
-      path: moduleName,
+      path: slash(moduleName),
       name: moduleName,
       package: {
         name: moduleName,
-        main: join(moduleSrcDirName, 'component.js'),
+        main: slash(join(moduleSrcDirName, 'component.js')),
         inpack: true
       }
     }
@@ -185,17 +186,17 @@ test('Should add correct  module with prefix', async t => {
 
   t.deepEqual(compiled.pkg, {
     name: prefixedModuleName,
-    main: join(moduleSrcDirName, 'component.js'),
+    main: slash(join(moduleSrcDirName, 'component.js')),
     inpack: true
   });
 
   t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
-      path: moduleName,
+      path: slash(moduleName),
       name: moduleName,
       package: {
         name: prefixedModuleName,
-        main: join(moduleSrcDirName, 'component.js'),
+        main: slash(join(moduleSrcDirName, 'component.js')),
         inpack: true
       }
     }
@@ -226,17 +227,17 @@ test('Should add deep module', async t => {
 
   t.deepEqual(compiled.pkg, {
     name: `${prefix}${moduleName}`,
-    main: join(moduleSrcDirName, 'index.js'),
+    main: slash(join(moduleSrcDirName, 'index.js')),
     inpack: true
   });
 
   t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
-      path: modulePath,
+      path: slash(modulePath),
       name: moduleName,
       package: {
         name: `${prefix}${moduleName}`,
-        main: join(moduleSrcDirName, 'index.js'),
+        main: slash(join(moduleSrcDirName, 'index.js')),
         inpack: true
       }
     }
@@ -262,7 +263,7 @@ test('Should support back notation', async t => {
   const moduleName = 'level1';
   const modulePath = join('../', backSandbox.id, moduleName);
   const result = await inpack.add(sandbox.path, modulePath);
-  t.is(result.path, modulePath);
+  t.is(result.path, slash(modulePath));
 
   const compiled = await compileModuleInfo(sandbox.path, moduleName, modulePath);
 
@@ -273,17 +274,17 @@ test('Should support back notation', async t => {
 
   t.deepEqual(compiled.pkg, {
     name: moduleName,
-    main: join(moduleSrcDirName, 'index.js'),
+    main: slash(join(moduleSrcDirName, 'index.js')),
     inpack: true
   });
 
   t.deepEqual(compiled.inpack.modules, {
     [moduleName]: {
-      path: modulePath,
+      path: slash(modulePath),
       name: moduleName,
       package: {
         name: moduleName,
-        main: join(moduleSrcDirName, 'index.js'),
+        main: slash(join(moduleSrcDirName, 'index.js')),
         inpack: true
       }
     }
