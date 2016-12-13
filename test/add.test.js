@@ -1,10 +1,12 @@
 import { tmpdir } from 'os';
-import { join, resolve } from 'path';
+import { posix } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
 import Inpack from './../lib';
 import fs from './../lib/utils/fs';
 import { moduleSrcDirName, inpackConfigName } from './../lib/constants';
+
+const { join, resolve } = posix;
 
 const compileModuleInfo = async (sandboxPath, moduleName, mainFile = 'index.js', prefix = '') => {
 
@@ -70,7 +72,7 @@ test('Should create and add new inpack module in the master prject when "create"
     create: true
   });
 
-  const compiled = await compileModuleInfo(sandbox.path, moduleName)
+  const compiled = await compileModuleInfo(sandbox.path, moduleName);
 
   t.true(compiled.realDirectoryStat.isDirectory());
   t.true(compiled.mainFileStat.isFile());

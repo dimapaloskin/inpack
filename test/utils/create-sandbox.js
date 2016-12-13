@@ -1,8 +1,10 @@
-const { join } = require('path');
+const { posix } = require('path');
 const fsxtra = require('fs-extra');
 const Promise = require('bluebird');
 const shortid = require('shortid');
 const constants = require('./constants');
+
+const { join } = posix;
 
 const fs = Promise.promisifyAll(fsxtra);
 

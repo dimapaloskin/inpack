@@ -1,8 +1,10 @@
 import { tmpdir } from 'os';
-import { join } from 'path';
+import { posix } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
 import aggregateContext from './../lib/aggregate-context';
+
+const { join } = posix;
 
 test('Should throw exception if receive incorrect working directory', async t => {
 
