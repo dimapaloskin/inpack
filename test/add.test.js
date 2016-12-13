@@ -8,10 +8,10 @@ import { moduleSrcDirName, inpackConfigName } from './../lib/constants';
 
 const { join, resolve } = posix;
 
-const compileModuleInfo = async (sandboxPath, moduleName, mainFile = 'index.js', prefix = '') => {
+const compileModuleInfo = async (sandboxPath, moduleName, path, mainFile = 'index.js', prefix = '') => {
 
   // absolute module path (technically it is should support symlinks too)
-  const modulePath = join(sandboxPath, moduleName);
+  const modulePath = join(sandboxPath, path);
   // absolute path to module that will created in the node_modules directory
   const nodeModulePath = join(sandboxPath, 'node_modules', `${prefix}${moduleName}`);
   const realDirectoryStat = await fs.statAsync(modulePath);
@@ -68,11 +68,11 @@ test('Should create and add new inpack module in the master prject when "create"
   const moduleName = 'module-does-not-exist';
   const inpack = new Inpack();
 
-  await inpack.add(sandbox.path, moduleName, {
+  const result = await inpack.add(sandbox.path, moduleName, {
     create: true
   });
 
-  const compiled = await compileModuleInfo(sandbox.path, moduleName);
+  const compiled = await compileModuleInfo(sandbox.path, moduleName, moduleName);
 
   t.true(compiled.realDirectoryStat.isDirectory());
   t.true(compiled.mainFileStat.isFile());
@@ -96,6 +96,8 @@ test('Should create and add new inpack module in the master prject when "create"
     }
   });
 
+  t.is(result.path, moduleName);
+
   await sandbox.remove();
 });
 
@@ -114,7 +116,7 @@ test('Should create and add new inpack module outside master project. should add
   // tests adding the same module several times
   await inpack.add(join(sandbox.path, moduleName));
 
-  const compiled = await compileModuleInfo(sandbox.path, moduleName);
+  const compiled = await compileModuleInfo(sandbox.path, moduleName, moduleName);
 
   t.true(compiled.realDirectoryStat.isDirectory());
   t.true(compiled.mainFileStat.isFile());
@@ -155,7 +157,7 @@ test('Should rewrite existing module with custom main file name', async t => {
     main: 'component.js'
   });
 
-  const compiled = await compileModuleInfo(sandbox.path, moduleName, 'component.js');
+  const compiled = await compileModuleInfo(sandbox.path, moduleName, moduleName, 'component.js');
 
   t.true(compiled.realDirectoryStat.isDirectory());
   t.true(compiled.mainFileStat.isFile());
@@ -196,7 +198,7 @@ test('Should add correct  module with prefix', async t => {
   });
 
   const prefix = `@${sandbox.id}/`;
-  const compiled = await compileModuleInfo(sandbox.path, moduleName, 'component.js', prefix);
+  const compiled = await compileModuleInfo(sandbox.path, moduleName, moduleName, 'component.js', prefix);
 
   t.true(compiled.realDirectoryStat.isDirectory());
   t.true(compiled.mainFileStat.isFile());
@@ -217,6 +219,46 @@ test('Should add correct  module with prefix', async t => {
       package: {
         name: prefixedModuleName,
         main: join(moduleSrcDirName, 'component.js'),
+        inpack: true
+      }
+    }
+  });
+
+  await sandbox.remove();
+});
+
+test('Should add deep module', async t => {
+  const sandbox = await createSandbox({
+    structure: 'deep',
+    isMaster: true
+  });
+
+  const moduleName = 'level2';
+  const modulePath = 'level1/level2';
+  const inpack = new Inpack();
+
+  await inpack.add(join(sandbox.path, modulePath));
+
+  const prefix = `@${sandbox.id}/`;
+  const compiled = await compileModuleInfo(sandbox.path, moduleName, modulePath, 'index.js', prefix);
+
+  t.true(compiled.realDirectoryStat.isDirectory());
+  t.true(compiled.mainFileStat.isFile());
+  t.true(compiled.nodeModuleDirectoryStat.isDirectory());
+  t.is(compiled.symlink, resolve(compiled.modulePath));
+
+  t.deepEqual(compiled.pkg, {
+    name: `${prefix}${moduleName}`,
+    main: join(moduleSrcDirName, 'index.js'),
+    inpack: true
+  });
+
+  t.deepEqual(compiled.inpack.modules, {
+    [moduleName]: {
+      path: modulePath,
+      package: {
+        name: `${prefix}${moduleName}`,
+        main: join(moduleSrcDirName, 'index.js'),
         inpack: true
       }
     }
