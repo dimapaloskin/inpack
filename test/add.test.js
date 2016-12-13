@@ -8,7 +8,7 @@ import { moduleSrcDirName } from './../lib/constants';
 
 const { join, resolve } = posix;
 
-test('Should throw error if master project is not found', async t => {
+test('Should throw error if master project does not found', async t => {
 
   const tmp = tmpdir();
   const inpack = new Inpack();
