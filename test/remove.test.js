@@ -1,10 +1,8 @@
-import { posix } from 'path';
+import { basename, join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
 import Inpack from './../lib';
 import fs from './../lib/utils/fs';
-
-const { basename, join } = posix;
 
 test('Should throw error if module was not added', async t => {
 

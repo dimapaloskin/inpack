@@ -1,8 +1,6 @@
-import { posix } from 'path';
+import { join } from 'path';
 import fs from './../../lib/utils/fs';
 import { moduleSrcDirName, inpackConfigName } from './../../lib/constants';
-
-const { join } = posix;
 
 const compileModuleInfo = async (sandboxPath, moduleName, path, opts = { mainFile: 'index.js', prefix: '' }) => {
 

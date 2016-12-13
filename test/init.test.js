@@ -1,10 +1,8 @@
-import { posix } from 'path';
+import { join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
 import Inpack from './../lib';
 import fs from './../lib/utils/fs';
-
-const { join } = posix;
 
 test('should throw exception if incorrect directory passed', async t => {
 

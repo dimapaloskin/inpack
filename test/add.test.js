@@ -1,12 +1,10 @@
 import { tmpdir } from 'os';
-import { posix } from 'path';
+import { join, resolve } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
 import Inpack from './../lib';
 import compileModuleInfo from './utils/compile-module-info';
 import { moduleSrcDirName } from './../lib/constants';
-
-const { join, resolve } = posix;
 
 test('Should throw error if master project does not found', async t => {
 
