@@ -80,8 +80,7 @@ test('should initialize new inpack project without prefix', async t => {
   const inpack = new Inpack();
   const options = {
     name: 'test-inpack',
-    prefix: '@test-inpack/',
-    noPrefix: true
+    prefix: false
   };
 
   const result = await inpack.init(sandbox.path, options);
