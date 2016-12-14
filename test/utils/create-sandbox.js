@@ -1,4 +1,4 @@
-const { join, resolve } = require('path');
+const { join } = require('path');
 const fsxtra = require('fs-extra');
 const Promise = require('bluebird');
 const shortid = require('shortid');
