@@ -3,15 +3,14 @@ import { join, resolve } from 'path';
 import test from 'ava';
 import slash from 'slash';
 import createSandbox from './utils/create-sandbox';
-import Inpack from './../lib';
 import compileModuleInfo from './utils/compile-module-info';
 import { moduleSrcDirName } from './../lib/constants';
+import add from './../lib/commands/add';
 
 test('Should throw error if master project does not found', async t => {
 
   const tmp = tmpdir();
-  const inpack = new Inpack();
-  const error = await t.throws(inpack.add(tmp));
+  const error = await t.throws(add(tmp));
   t.is(error.message, 'Master project is not found');
 
 });
@@ -23,9 +22,9 @@ test('Should throw error if module directory does not exist and create options i
     isMaster: true
   });
 
-  const inpack = new Inpack();
-  const error = await t.throws(inpack.add(sandbox.path, 'module-does-not-exist'));
-  t.is(error.message, 'Target module path does not exist. Create directory manually or use --create option');
+  const moduleName = 'module-does-not-exist';
+  const error = await t.throws(add(sandbox.path, moduleName));
+  t.is(error.message, `Target module path ${moduleName} does not exist. Create directory manually or use --create option`);
 
   await sandbox.remove();
 
@@ -40,9 +39,8 @@ test('Should create and add new inpack module in the master prject when "create"
   });
 
   const moduleName = 'module-does-not-exist';
-  const inpack = new Inpack();
 
-  const result = await inpack.add(sandbox.path, moduleName, {
+  const result = await add(sandbox.path, moduleName, {
     create: true
   });
 
@@ -85,11 +83,10 @@ test('Should create and add new inpack module outside master project. should add
   });
 
   const moduleName = 'level1';
-  const inpack = new Inpack();
 
-  await inpack.add(join(sandbox.path, moduleName));
+  await add(join(sandbox.path, moduleName));
   // tests adding the same module several times
-  await inpack.add(join(sandbox.path, moduleName));
+  await add(join(sandbox.path, moduleName));
 
   const compiled = await compileModuleInfo(sandbox.path, moduleName, moduleName);
 
@@ -127,9 +124,8 @@ test('Should rewrite existing module with custom main file name', async t => {
   });
 
   const moduleName = 'existing-module';
-  const inpack = new Inpack();
 
-  await inpack.add(sandbox.path, moduleName, {
+  await add(sandbox.path, moduleName, {
     main: 'component.js'
   });
 
@@ -168,9 +164,8 @@ test('Should add correct  module with prefix', async t => {
   });
 
   const moduleName = 'existing-module';
-  const inpack = new Inpack();
 
-  await inpack.add(sandbox.path, moduleName, {
+  await add(sandbox.path, moduleName, {
     main: 'component.js'
   });
 
@@ -213,9 +208,8 @@ test('Should add deep module', async t => {
 
   const moduleName = 'level2';
   const modulePath = 'level1/level2';
-  const inpack = new Inpack();
 
-  await inpack.add(join(sandbox.path, modulePath));
+  await add(join(sandbox.path, modulePath));
 
   const prefix = `@${sandbox.id}/`;
   const compiled = await compileModuleInfo(sandbox.path, moduleName, modulePath, { mainFile: 'index.js', prefix });
@@ -258,11 +252,9 @@ test('Should support back notation', async t => {
     isMaster: false
   });
 
-  const inpack = new Inpack();
-
   const moduleName = 'level1';
   const modulePath = join('../', backSandbox.id, moduleName);
-  const result = await inpack.add(sandbox.path, modulePath);
+  const result = await add(sandbox.path, modulePath);
   t.is(result.path, slash(modulePath));
 
   const compiled = await compileModuleInfo(sandbox.path, moduleName, modulePath);

@@ -1,7 +1,7 @@
 import { join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import Inpack from './../lib';
+import link from './../lib/commands/link';
 
 test('Should link existing modules correct', async t => {
 
@@ -10,10 +10,9 @@ test('Should link existing modules correct', async t => {
     structure: 'preinstalled'
   });
 
-  const inpack = new Inpack();
   const corePath = join(sandbox.path, 'core');
-  await inpack.link(corePath);
 
+  await link(corePath);
   const core = require(corePath); // eslint-disable-line import/no-dynamic-require
 
   t.deepEqual(core, {
