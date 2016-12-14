@@ -36,15 +36,16 @@ test('Should catch rejected', async t => {
   const corePath = join(sandbox.path, 'core');
 
   const result = await link(corePath);
+
   t.is(result.successed.length, 2);
   t.is(result.failed.length, 1);
-  t.pass();
-  /* const core = require(corePath); // eslint-disable-line import/no-dynamic-require
 
-  t.deepEqual(core, {
-    main: 'components/main',
-    helpers: 'helpers',
-    superModule: '../super-module'
-  }); */
+  try {
+    require(corePath); // eslint-disable-line import/no-dynamic-require
+    t.fail('should reject');
+  } catch (err) {
+    t.is(err.message, `Cannot find module 'preinstalled-helpers'`);
+  }
+
   sandbox.remove();
 });
