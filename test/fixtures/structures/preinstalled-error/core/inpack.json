@@ -1,0 +1,33 @@
+{
+  "name": "preinstalled",
+  "prefix": "preinstalled-",
+  "modules": {
+    "main": {
+      "path": "components/main",
+      "name": "main",
+      "package": {
+        "name": "preinstalled-main",
+        "main": "src/index.js",
+        "inpack": true
+      }
+    },
+    "helpers": {
+      "path": "helpers",
+      "name": "helpers",
+      "package": {
+        "name": "preinstalled-helpers",
+        "main": "src/index.js",
+        "inpack": true
+      }
+    },
+    "super-module": {
+      "path": "../super-module",
+      "name": "super-module",
+      "package": {
+        "name": "preinstalled-super-module",
+        "main": "src/index.js",
+        "inpack": true
+      }
+    }
+  }
+}

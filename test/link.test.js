@@ -23,3 +23,26 @@ test('Should link existing modules correct', async t => {
 
   sandbox.remove();
 });
+
+test('Should catch rejected', async t => {
+
+  const sandbox = await createSandbox({
+    isMaster: false,
+    structure: 'preinstalled-error'
+  });
+
+  const corePath = join(sandbox.path, 'core');
+
+  const result = await link(corePath);
+
+  console.log(result);
+  t.pass();
+  /* const core = require(corePath); // eslint-disable-line import/no-dynamic-require
+
+  t.deepEqual(core, {
+    main: 'components/main',
+    helpers: 'helpers',
+    superModule: '../super-module'
+  }); */
+  sandbox.remove();
+});

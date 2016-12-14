@@ -30,7 +30,7 @@ test('Should throw error if module directory does not exist and create options i
 
 });
 
-test('Should create and add new inpack module in the master prject when "create" option passed', async t => {
+test('Should create and add new inpack module in the master project when "create" option passed', async t => {
 
   const sandbox = await createSandbox({
     structure: 'deep',
