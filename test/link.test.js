@@ -12,7 +12,9 @@ test('Should link existing modules correct', async t => {
 
   const corePath = join(sandbox.path, 'core');
 
-  await link(corePath);
+  const result = await link(corePath);
+  t.is(result.successed.length, 3);
+  t.is(result.failed.length, 0);
   const core = require(corePath); // eslint-disable-line import/no-dynamic-require
 
   t.deepEqual(core, {
@@ -34,8 +36,8 @@ test('Should catch rejected', async t => {
   const corePath = join(sandbox.path, 'core');
 
   const result = await link(corePath);
-
-  console.log(result);
+  t.is(result.successed.length, 2);
+  t.is(result.failed.length, 1);
   t.pass();
   /* const core = require(corePath); // eslint-disable-line import/no-dynamic-require
 
