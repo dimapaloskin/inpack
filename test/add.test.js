@@ -74,7 +74,7 @@ test('Should create and add new inpack module in the master prject when "create"
   await sandbox.remove();
 });
 
-test('Should create and add new inpack module outside master project. should add module the same module twice without errors', async t => {
+test('Should create and add new inpack module outside master project. should add the same module twice without errors', async t => {
 
   const sandbox = await createSandbox({
     structure: 'deep',
@@ -284,4 +284,49 @@ test('Should support back notation', async t => {
 
   await sandbox.remove();
   await backSandbox.remove();
+});
+
+test('Should use existing package.json', async t => {
+
+  const sandbox = await createSandbox({
+    structure: 'deep',
+    isMaster: true,
+    noPrefix: true
+  });
+
+  const moduleName = 'pack';
+
+  await add(join(sandbox.path, moduleName));
+
+  const compiled = await compileModuleInfo(sandbox.path, moduleName, moduleName, {
+    mainFile: 'pack.js',
+    prefix: ''
+  });
+
+  t.true(compiled.realDirectoryStat.isDirectory());
+  t.true(compiled.mainFileStat.isFile());
+  t.true(compiled.nodeModuleDirectoryStat.isDirectory());
+  t.is(compiled.symlink, resolve(compiled.modulePath));
+
+  t.deepEqual(compiled.pkg, {
+    name: moduleName,
+    main: slash(join(moduleSrcDirName, 'pack.js')),
+    inpack: true,
+    customField: true
+  });
+
+  t.deepEqual(compiled.inpack.modules, {
+    [moduleName]: {
+      path: slash(moduleName),
+      name: moduleName,
+      package: {
+        name: moduleName,
+        main: slash(join(moduleSrcDirName, 'pack.js')),
+        inpack: true,
+        customField: true
+      }
+    }
+  });
+
+  await sandbox.remove();
 });
