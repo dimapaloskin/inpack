@@ -47,5 +47,13 @@ test('Should catch rejected', async t => {
     t.is(err.message, `Cannot find module 'preinstalled-helpers'`);
   }
 
+  const testPath = join(corePath, 'test');
+  const testResult = require(testPath); // eslint-disable-line import/no-dynamic-require
+
+  t.deepEqual(testResult, {
+    main: 'components/main',
+    superModule: '../super-module'
+  });
+
   sandbox.remove();
 });

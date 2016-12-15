@@ -1,16 +1,14 @@
 import { join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import Inpack from './../lib';
+import init from './../lib/commands/init';
 import fs from './../lib/utils/fs';
 
 test('should throw exception if incorrect directory passed', async t => {
 
-  const inpack = new Inpack();
-
-  const failedInit = inpack.init();
+  const failedInit = init();
   const error = await t.throws(failedInit);
-  t.is(error.message, 'Incorrect directory passed: undefined');
+  t.is(error.message, 'Incorrect directory passed');
 });
 
 test('should throw exception if incorrect directory does not contain package.json', async t => {
@@ -19,8 +17,7 @@ test('should throw exception if incorrect directory does not contain package.jso
     isMaster: false
   });
 
-  const inpack = new Inpack();
-  const failedInit = inpack.init(sandbox.path);
+  const failedInit = init(sandbox.path);
   const error = await t.throws(failedInit);
   t.is(error.message, 'Can not be initialized. Directory must contain package.json');
 
@@ -33,8 +30,7 @@ test('Should initialize new inpack project', async t => {
     withoutInpack: true
   });
 
-  const inpack = new Inpack();
-  const result = await inpack.init(sandbox.path);
+  const result = await init(sandbox.path);
 
   t.true(typeof result.configPath === 'string');
   t.true(typeof result.inpack === 'object');
@@ -51,13 +47,12 @@ test('Should initialize new inpack project with passed options', async t => {
     withoutInpack: true
   });
 
-  const inpack = new Inpack();
   const options = {
     name: 'test-inpack',
     prefix: '@test-inpack/'
   };
 
-  const result = await inpack.init(sandbox.path, options);
+  const result = await init(sandbox.path, options);
   t.true(typeof result.configPath === 'string');
   t.true(typeof result.inpack === 'object');
   t.is(result.inpack.name, options.name);
@@ -75,13 +70,12 @@ test('should initialize new inpack project without prefix', async t => {
     withoutInpack: true
   });
 
-  const inpack = new Inpack();
   const options = {
     name: 'test-inpack',
     prefix: false
   };
 
-  const result = await inpack.init(sandbox.path, options);
+  const result = await init(sandbox.path, options);
   t.true(typeof result.configPath === 'string');
   t.true(typeof result.inpack === 'object');
   t.is(result.inpack.name, options.name);
@@ -99,12 +93,11 @@ test('should initialize new inpack project and add postinstall', async t => {
     withoutInpack: true
   });
 
-  const inpack = new Inpack();
   const options = {
     addPostinstall: true
   };
 
-  const result = await inpack.init(sandbox.path, options);
+  const result = await init(sandbox.path, options);
   t.true(typeof result.configPath === 'string');
   t.true(typeof result.inpack === 'object');
 
@@ -125,12 +118,11 @@ test('should initialize new inpack project and modify postinstall', async t => {
   pkgBody.postinstall = 'echo "postinstall"';
   await fs.writeJsonAsync(pkgPath, pkgBody);
 
-  const inpack = new Inpack();
   const options = {
     addPostinstall: true
   };
 
-  const result = await inpack.init(sandbox.path, options);
+  const result = await init(sandbox.path, options);
   t.true(typeof result.configPath === 'string');
   t.true(typeof result.inpack === 'object');
 
