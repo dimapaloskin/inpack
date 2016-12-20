@@ -17,7 +17,7 @@ test('Should throw error if module was not added', async t => {
   const moduleName = basename(moduleRelativePath);
 
   const error = await t.throws(remove(sandbox.path, moduleName));
-  t.is(error.message, `${moduleName} was not found in the inpack configuration file. Use --force options to ignore it`);
+  t.is(error.message, `${moduleName} was not found in the inpack configuration file. Use --force option to ignore it`);
 
   sandbox.remove();
 });
