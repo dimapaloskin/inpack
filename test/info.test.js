@@ -34,9 +34,11 @@ test('should provide module info by name from master directory', async t => {
 
   t.deepEqual(result, {
     masterAbsolutePath: corePath,
+    nodeModulePath: join(corePath, 'node_modules', 'preinstalled-super-module'),
     relative: '../super-module',
     absolute: resolve(corePath, '../super-module'),
     name: 'super-module',
+    pkgName: 'preinstalled-super-module',
     prefixedName: 'preinstalled-super-module',
     mainFile: 'index.js',
     isLinked: true
@@ -60,9 +62,11 @@ test('should provide module info from module directory', async t => {
 
   t.deepEqual(result, {
     masterAbsolutePath: corePath,
+    nodeModulePath: join(corePath, 'node_modules', 'preinstalled-main'),
     relative: 'components/main',
     absolute: modulePath,
     name: 'main',
+    pkgName: 'preinstalled-main',
     prefixedName: 'preinstalled-main',
     mainFile: 'index.js',
     isLinked: true
