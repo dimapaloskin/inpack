@@ -23,8 +23,9 @@ test('Should throw error if module directory does not exist and create options i
   });
 
   const moduleName = 'module-does-not-exist';
+  const absolutePath = resolve(join(sandbox.path, 'module-does-not-exist'));
   const error = await t.throws(add(sandbox.path, moduleName));
-  t.is(error.message, `Target module path ${moduleName} does not exist. Create directory manually or use --create option`);
+  t.is(error.message, `Target path ${absolutePath} for module "${moduleName}" does not exist. Create directory manually or use --create option`);
 
   await sandbox.remove();
 
