@@ -9,6 +9,11 @@
     "link",
     "symlink"
   ],
+  "files": [
+    "dist",
+    "index.js",
+    "cli.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/dimapaloskin/inpack"
