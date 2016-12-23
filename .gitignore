@@ -1,0 +1,4 @@
+node_modules
+test/sandbox
+npm-debug.log
+dist
