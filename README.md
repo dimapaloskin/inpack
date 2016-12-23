@@ -117,6 +117,8 @@ Lists a brief information about all modules.
 **Available options:**
 - `--verbose` - lists the full information about all modules.
 
+### Common options
+
 Also there is the `—context-dir` option that is available for all of the commands and allows to specify a directory where you would like to run one or another command. For example:
 
 ```bash
