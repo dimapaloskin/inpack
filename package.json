@@ -18,6 +18,9 @@
   },
   "main": "dist/index.js",
   "bin": "cli.js",
+  "engines": {
+    "node": ">=6"
+  },
   "scripts": {
     "build": "npm run build-lib && npm run build-cli",
     "build-lib": "babel src/lib --out-dir dist/lib",
