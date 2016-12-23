@@ -1,6 +1,6 @@
 import { join } from 'path';
-import fs from './../../lib/utils/fs';
-import { moduleSrcDirName, inpackConfigName } from './../../lib/constants';
+import fs from './../../src/lib/utils/fs';
+import { moduleSrcDirName, inpackConfigName } from './../../src/lib/constants';
 
 const compileModuleInfo = async (sandboxPath, moduleName, path, opts = { mainFile: 'index.js', prefix: '' }) => {
 

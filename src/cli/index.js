@@ -1,6 +1,6 @@
 const meow = require('meow');
 const chalk = require('chalk');
-const pkg = require('./../package.json');
+const pkg = require('./../../package.json');
 const { init } = require('./init');
 const { add } = require('./add');
 const { remove } = require('./remove');

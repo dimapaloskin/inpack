@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "bin": "cli.js",
   "scripts": {
-    "build": "babel lib --out-dir dist",
+    "build": "npm run build-lib && npm run build-cli",
+    "build-lib": "babel src/lib --out-dir dist/lib",
+    "build-cli": "babel src/cli --out-dir dist/cli",
     "test": "xo && ava -v"
   },
   "author": "Dima Paloskin <dima@paloskin.me>",

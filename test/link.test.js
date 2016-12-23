@@ -1,7 +1,7 @@
 import { join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import link from './../lib/commands/link';
+import link from './../src/lib/commands/link';
 
 test('Should link existing modules correct', async t => {
 

@@ -1,8 +1,8 @@
 import { join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import init from './../lib/commands/init';
-import fs from './../lib/utils/fs';
+import init from './../src/lib/commands/init';
+import fs from './../src/lib/utils/fs';
 
 test('should throw exception if wrong directory passed', async t => {
 

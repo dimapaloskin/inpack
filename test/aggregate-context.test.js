@@ -2,7 +2,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import aggregateContext from './../lib/aggregate-context';
+import aggregateContext from './../src/lib/aggregate-context';
 
 test('Should throw exception if wrong working directory has been recieved', async t => {
 

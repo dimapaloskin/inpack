@@ -1,5 +1,5 @@
 import test from 'ava';
-import Inpack from './../';
+import Inpack from './../src/lib';
 
 test('Should construct inpack correct', t => {
 

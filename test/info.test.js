@@ -1,8 +1,8 @@
 import { join, resolve } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import link from './../lib/commands/link';
-import info from './../lib/commands/info';
+import link from './../src/lib/commands/link';
+import info from './../src/lib/commands/info';
 
 test('should throw error if module does not found', async t => {
 

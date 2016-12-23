@@ -1,9 +1,9 @@
 import { basename, join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import fs from './../lib/utils/fs';
-import remove from './../lib/commands/remove';
-import add from './../lib/commands/add';
+import fs from './../src/lib/utils/fs';
+import remove from './../src/lib/commands/remove';
+import add from './../src/lib/commands/add';
 
 test('Should throw error if module was not added', async t => {
 

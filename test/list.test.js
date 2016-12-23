@@ -1,8 +1,8 @@
 import { join } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
-import link from './../lib/commands/link';
-import list from './../lib/commands/list';
+import link from './../src/lib/commands/link';
+import list from './../src/lib/commands/list';
 
 test('should provide information about all modules', async t => {
 

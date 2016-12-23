@@ -4,8 +4,8 @@ import test from 'ava';
 import slash from 'slash';
 import createSandbox from './utils/create-sandbox';
 import compileModuleInfo from './utils/compile-module-info';
-import { moduleSrcDirName } from './../lib/constants';
-import add from './../lib/commands/add';
+import { moduleSrcDirName } from './../src/lib/constants';
+import add from './../src/lib/commands/add';
 
 test('Should throw error if master project does not found', async t => {
 
