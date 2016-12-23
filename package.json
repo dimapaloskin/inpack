@@ -1,7 +1,21 @@
 {
   "name": "inpack",
   "version": "0.1.0",
-  "description": "",
+  "description": "Nodejs invisible modules manager",
+  "keywords": [
+    "manager",
+    "modules manager",
+    "modules",
+    "link",
+    "symlink"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dimapaloskin/inpack"
+  },
+  "bugs": {
+    "url": "https://github.com/dimapaloskin/inpack/issues"
+  },
   "main": "dist/index.js",
   "bin": "cli.js",
   "scripts": {
