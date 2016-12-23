@@ -79,7 +79,7 @@ Creates a new project in the current directory.
 
 **Available options:**
 - `--name` - project name (directory name by default)
-- `--prefix` - prefix for added modules. It makes sense using this option if you want to avoid conflicts with other modules. For example, suppose the project’s prefix is `@Project/`. Then, a module named `MainComponent` can be accessed via `@Project/MainComponent`.
+- `--prefix` - prefix for added modules. It makes sense using this option if you want to avoid conflicts with other modules. For example, suppose the project’s prefix is `@Project/`. Then, a module named `MainComponent` can be accessed via `@Project/MainComponent`. As a bonus, you always know that you are importing inpack module.
 - `--add-postinstall` - adds or modifies the `postinstall` attribute in the existing package.json by adding the `inpack link` command.
 
 ### `inpack add [module/relative/path]`
