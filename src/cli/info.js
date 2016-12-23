@@ -9,7 +9,7 @@ const info = async (cli, moduleName) => {
   const directory = cli.flags.contextDir || process.cwd();
   const options = cli.flags;
   const inpack = new Inpack();
-  const spinner = ora(`Getting information for "${moduleName}" module`);
+  const spinner = ora(`Getting information for module`);
   spinner.start();
 
   try {
