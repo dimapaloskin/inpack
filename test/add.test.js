@@ -11,8 +11,19 @@ test('Should throw error if master project does not found', async t => {
 
   const tmp = tmpdir();
   const error = await t.throws(add(tmp));
-  t.is(error.message, 'Master project is not found');
+  t.is(error.message, 'Master project has not been found');
 
+});
+
+test('Should throw an error if there is an attempt to add master project to master project without the --name option', async t => {
+  const sandbox = await createSandbox({
+    structure: 'deep',
+    isMaster: true
+  });
+
+  const error = await t.throws(add(sandbox.path));
+  t.is(error.message, 'You cannot add master project to master project. If you want, you can use --name');
+  await sandbox.remove();
 });
 
 test('Should throw error if module directory does not exist and create options is not passed', async t => {

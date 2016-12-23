@@ -4,11 +4,11 @@ import test from 'ava';
 import createSandbox from './utils/create-sandbox';
 import aggregateContext from './../lib/aggregate-context';
 
-test('Should throw exception if receive incorrect working directory', async t => {
+test('Should throw exception if wrong working directory has been recieved', async t => {
 
   const promise = aggregateContext({});
   const error = await t.throws(promise);
-  t.is(error.message, 'Incorrect directory passed', 'unexpected error');
+  t.is(error.message, 'Wrong directory passed', 'unexpected error');
 });
 
 test('Should throw exception if passed directory is not exists', async t => {

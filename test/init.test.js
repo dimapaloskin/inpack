@@ -4,11 +4,11 @@ import createSandbox from './utils/create-sandbox';
 import init from './../lib/commands/init';
 import fs from './../lib/utils/fs';
 
-test('should throw exception if incorrect directory passed', async t => {
+test('should throw exception if wrong directory passed', async t => {
 
   const failedInit = init();
   const error = await t.throws(failedInit);
-  t.is(error.message, 'Incorrect directory passed');
+  t.is(error.message, 'Wrong directory passed');
 });
 
 test('should throw exception if incorrect directory does not contain package.json', async t => {
@@ -19,7 +19,7 @@ test('should throw exception if incorrect directory does not contain package.jso
 
   const failedInit = init(sandbox.path);
   const error = await t.throws(failedInit);
-  t.is(error.message, 'Can not be initialized. Directory must contain package.json');
+  t.is(error.message, 'Can not be initialized. The directory must contain package.json');
 
   await sandbox.remove();
 });
