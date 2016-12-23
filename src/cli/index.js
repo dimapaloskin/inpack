@@ -9,6 +9,7 @@ const { info } = require('./info');
 const { list } = require('./list');
 
 module.exports = async () => {
+  // Use help <command> to get more information about <command>
   const cli = meow(`
 
     inpack - nodejs invisible modules manager
@@ -24,8 +25,6 @@ module.exports = async () => {
       ${chalk.bold('link')} - link all modules from inpack.json
       ${chalk.bold('info')} <module_name> - show inforamtion about module
       ${chalk.bold('list')} - provide information about all modules
-
-    Use help <command> to get more information about <command>
 
     inpack@${pkg.version}`,
     {
