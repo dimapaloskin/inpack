@@ -1,5 +1,4 @@
 const { resolve, join } = require('path');
-const debug = require('debug')('inpack:aggregate-context');
 const constants = require('./constants');
 const InpackError = require('./utils/error');
 const fs = require('./utils/fs');
@@ -57,7 +56,6 @@ const detectMaster = async directory => {
 
 module.exports = async (directory, options) => {
 
-  debug('aggregate context for', directory);
   try {
 
     if (!options) {
