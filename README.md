@@ -104,7 +104,9 @@ Removes specified module (from the configuration as well). Does not remove the s
 
 Links all of the modules from inpack.json. Must be run from the master project.
 
-### inpack info [module name] (alias: resolve)
+### inpack info [module name] 
+
+**Alias:** resolve
 
 Displays information about the module. Can be used in various ways as well as ‘add’ or ‘remove’.
 
