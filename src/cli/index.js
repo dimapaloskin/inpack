@@ -11,19 +11,21 @@ const { list } = require('./list');
 module.exports = async () => {
   const cli = meow(`
 
-    inpack - module manager
+    inpack - nodejs invisible modules manager
 
     Usage: inpack <command>
 
     Available commands:
-      ${chalk.bold('help')} - shown this text
-      init - initialize new inpack master project
-      add - add new directory as a modulet
-      remove - remove module
-      link - link all modules from inpack.json
-      resolve - show indoramtion about choosen module or about all modules
 
-    Use help <command> for get help on <command>
+      ${chalk.bold('help')} - show this text
+      ${chalk.bold('init')} - initialize new inpack master project
+      ${chalk.bold('add')} <relative/path> - add directory as a module
+      ${chalk.bold('remove')} <module_name> - remove module
+      ${chalk.bold('link')} - link all modules from inpack.json
+      ${chalk.bold('info')} <module_name> - show inforamtion about module
+      ${chalk.bold('list')} - provide information about all modules
+
+    Use help <command> to get more information about <command>
 
     inpack@${pkg.version}`,
     {
