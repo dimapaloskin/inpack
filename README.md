@@ -62,7 +62,7 @@ All of your components are good to go now.
 
 ## Commands list
 
-### inpack init
+### `inpack init`
 
 Creates a new project in the current directory.
 
@@ -71,7 +71,7 @@ Creates a new project in the current directory.
 - `--prefix` - prefix for added modules. It makes sense using this option if you want to avoid conflicts with other modules. For example, suppose the project’s prefix is `@Project/`. Then, a module named `MainComponent` can be accessed via `@Project/MainComponent`.
 - `--add-postinstall` - adds or modifies the `postinstall` attribute in the existing package.json by adding the `inpack link` command.
 
-### inpack add [module/relative/path]
+### `inpack add` [module/relative/path]
 
 Declares a directory as a Node.js module. Can be used in various ways:
 `inpack add <relative-path>` - adds specified directory as a module relative to the inpack master
@@ -92,7 +92,7 @@ Declares a directory as a Node.js module. Can be used in various ways:
  - `--main` - main file, does the same as the "main" attribute from package.json does. `index.js` by default.
  - `--create` - creates a directory and main file, in case if either the directory or main file doesn’t exist.
  
-### inpack remove [module name]
+### `inpack remove` [module name]
 
 Removes specified module (from the configuration as well). Does not remove the source-directory. Can be used in various ways as well as ‘add’.
 
@@ -100,17 +100,17 @@ Removes specified module (from the configuration as well). Does not remove the s
 
 - `--force` - removes the module even if it’s not declared in the configuration file.
  
-### inpack link
+### `inpack link`
 
 Links all of the modules from inpack.json. Must be run from the master project.
 
-### inpack info [module name] 
+### `inpack info` [module name] 
 
 **Alias:** resolve
 
 Displays information about the module. Can be used in various ways as well as ‘add’ or ‘remove’.
 
-### inpack list
+### `inpack list`
 
 Lists a brief information about all modules.
 
