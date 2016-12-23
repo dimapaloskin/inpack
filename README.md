@@ -2,7 +2,15 @@
 
 Inpack is a cli tool that makes it possible to use any directory as a Node.js module. It helps in avoiding long relative paths (like ```import responseParser from '../../../utils/responseParser';```) in your "require" or "import" without creating any additional files apart from its own config file called inpack.json.
 
-[![asciicast](https://asciinema.org/a/0wkld20ceezb6mybjslkk34l6.png)](https://asciinema.org/a/0wkld20ceezb6mybjslkk34l6)
+[![asciicast](https://asciinema.org/a/eqwqbix1aw8vkn6fhb6zug5am.png)](https://asciinema.org/a/eqwqbix1aw8vkn6fhb6zug5am)
+
+## Installation
+
+Install it globally:
+
+```bash
+$ npm install -g inpack
+```
 
 ## Usage example
 
@@ -18,7 +26,7 @@ Suppose we have a project with the following structure:
   package.json
  ```
  
-Use next command in the project’s root directory.
+Use next command in the project’s root directory:
 
 ```bash
 ~/Project $ inpack init
@@ -26,7 +34,7 @@ Use next command in the project’s root directory.
 
 Valid package.json is required. It will create inpack.json.
 
-Use "add" to add existing directory as a Node.js module and save data to inpack.json.
+Use "add" to add existing directory as a Node.js module and save data to inpack.json:
 
 ```bash
 ~/Project $ inpack add Component/MainComponent
