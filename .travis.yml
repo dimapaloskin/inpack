@@ -2,6 +2,12 @@ language: node_js
 node_js:
   - 7
   - 6
+cache:
+  directories:
+    - $HOME/.npm
+    - node_modules
+before_install:
+  npm i -g babel-cli
 
 before_script:
   npm run build
