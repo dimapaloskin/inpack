@@ -2,6 +2,8 @@
 
 Inpack is a cli tool that makes it possible to use any directory as a Node.js module. It helps in avoiding long relative paths (like ```import responseParser from '../../../utils/responseParser';```) in your "require" or "import" without creating any additional files apart from its own config file called inpack.json.
 
+## Screencast
+
 [![asciicast](https://asciinema.org/a/eqwqbix1aw8vkn6fhb6zug5am.png)](https://asciinema.org/a/eqwqbix1aw8vkn6fhb6zug5am)
 
 ## Installation
