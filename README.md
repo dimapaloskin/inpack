@@ -28,13 +28,13 @@ Suppose we have a project with the following structure:
   package.json
  ```
  
-Use next command in the project’s root directory:
+Use next command in the project’s root directory (valid package.json is required):
 
 ```bash
 ~/Project $ inpack init
 ```
 
-Valid package.json is required. It will create inpack.json.
+It will create inpack.json.
 
 Use "add" to add existing directory as a Node.js module and save data to inpack.json:
 
@@ -59,3 +59,76 @@ In future, if you need to deploy the project (or just clone it from github), you
 ```
 
 All of your components are good to go now.
+
+## Commands list
+
+### `inpack init`
+
+Creates a new project in the current directory.
+
+**Available options:**
+- `--name` - project name (directory name by default)
+- `--prefix` - prefix for added modules. It makes sense using this option if you want to avoid conflicts with other modules. For example, suppose the project’s prefix is `@Project/`. Then, a module named `MainComponent` can be accessed via `@Project/MainComponent`.
+- `--add-postinstall` - adds or modifies the `postinstall` attribute in the existing package.json by adding the `inpack link` command.
+
+### `inpack add [module/relative/path]`
+
+Declares a directory as a Node.js module. Can be used in various ways:
+`inpack add <relative-path>` - adds specified directory as a module relative to the inpack master
+`inpack add` - adds current directory as a module.
+
+ For example:
+ ```bash
+ ~/Project $ inpack add Components/MainComponent
+ ```
+ is equivalent to
+ 
+ ```bash
+ ~/Project/Components/MainComponent $ inpack add
+ ```
+ **Available options:**
+ 
+ - `--name` - module name (directory name by default)
+ - `--main` - main file, does the same as the "main" attribute from package.json does. `index.js` by default.
+ - `--create` - creates a directory and main file, in case if either the directory or main file doesn’t exist.
+ 
+### `inpack remove [module name]`
+
+Removes specified module (from the configuration as well). Does not remove the source-directory. Can be used in various ways as well as ‘add’.
+
+**Available options:**
+
+- `--force` - removes the module even if it’s not declared in the configuration file.
+ 
+### `inpack link`
+
+Links all of the modules from inpack.json. Must be run from the master project.
+
+### `inpack info [module name]`
+
+**Alias:** resolve
+
+Displays information about the module. Can be used in various ways as well as ‘add’ or ‘remove’.
+
+### `inpack list`
+
+Lists a brief information about all modules.
+
+**Available options:**
+- `--verbose` - lists the full information about all modules.
+
+### Common options
+
+Also there is the `—context-dir` option that is available for all of the commands and allows to specify a directory where you would like to run one or another command. For example:
+
+```bash
+~ $ inpack list 
+✖ Searching for master project
+Master project has not been found
+
+~ $ inpack list --context-dir ./Project
+[There goes the command output]
+```
+
+#### Author
+[Dmitry Pavlovsky](http://palosk.in)
