@@ -28,13 +28,13 @@ Suppose we have a project with the following structure:
   package.json
  ```
  
-Use next command in the project’s root directory:
+Use next command in the project’s root directory (valid package.json is required):
 
 ```bash
 ~/Project $ inpack init
 ```
 
-Valid package.json is required. It will create inpack.json.
+It will create inpack.json.
 
 Use "add" to add existing directory as a Node.js module and save data to inpack.json:
 
