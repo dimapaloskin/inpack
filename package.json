@@ -83,6 +83,9 @@
       ],
       "no-use-extend-native/no-use-extend-native": [
         0
+      ],
+      "linebreak-style": [
+        0
       ]
     }
   }

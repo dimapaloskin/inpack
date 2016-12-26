@@ -1,3 +1,4 @@
+const { normalize } = require('path');
 const Promise = require('bluebird');
 const add = require('./add');
 const aggregateContext = require('./../aggregate-context');
@@ -36,7 +37,7 @@ const link = async function (directory) {
       }
 
       try {
-        result.value = await add(directory, module.path, {
+        result.value = await add(directory, normalize(module.path), {
           name: module.name || undefined,
           pkg: module.package,
           silent: true
