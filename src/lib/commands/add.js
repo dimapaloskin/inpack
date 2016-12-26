@@ -1,4 +1,4 @@
-const { join, basename, resolve } = require('path');
+const { join, basename, resolve, normalize } = require('path');
 const slash = require('slash');
 const InpackError = require('./../utils/error');
 const fs = require('./../utils/fs');
@@ -48,7 +48,7 @@ const add = async function (directory, path, options) {
     const nodeModulePath = join(resolvedModule.masterAbsolutePath, 'node_modules', prefixedModuleName);
     emit('add:module-names', { name: moduleName, prefixed: prefixedModuleName });
 
-    if (inpackJson.modules && inpackJson.modules[moduleName] && inpackJson.modules[moduleName].path !== resolvedModule.relative) {
+    if (inpackJson.modules && inpackJson.modules[moduleName] && normalize(inpackJson.modules[moduleName].path) !== resolvedModule.relative) {
       throw new InpackError(`${moduleName} is already linked with another module. Remove previous module at first`);
     }
 

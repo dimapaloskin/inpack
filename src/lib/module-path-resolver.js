@@ -1,4 +1,4 @@
-const { relative, join } = require('path');
+const { relative, join, normalize } = require('path');
 const InpackError = require('./utils/error');
 const fs = require('./utils/fs');
 
@@ -9,8 +9,8 @@ const modulePathResolver = async (directory, path, context) => {
       path = relative(context.masterPath, directory);
     }
 
-    const relativeModulePath = relative('.', path);
-    const absoluteModulePath = join(context.masterPath, path);
+    const relativeModulePath = normalize(relative('.', path));
+    const absoluteModulePath = normalize(join(context.masterPath, path));
 
     let isExists = true;
     let isWritable = false;

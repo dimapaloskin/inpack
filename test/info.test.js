@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { join, resolve, normalize } from 'path';
 import test from 'ava';
 import createSandbox from './utils/create-sandbox';
 import link from './../src/lib/commands/link';
@@ -35,7 +35,7 @@ test('should provide module info by name from master directory', async t => {
   t.deepEqual(result, {
     masterAbsolutePath: corePath,
     nodeModulePath: join(corePath, 'node_modules', 'preinstalled-super-module'),
-    relative: '../super-module',
+    relative: normalize('../super-module'),
     absolute: resolve(corePath, '../super-module'),
     name: 'super-module',
     pkgName: 'preinstalled-super-module',
@@ -63,7 +63,7 @@ test('should provide module info from module directory', async t => {
   t.deepEqual(result, {
     masterAbsolutePath: corePath,
     nodeModulePath: join(corePath, 'node_modules', 'preinstalled-main'),
-    relative: 'components/main',
+    relative: normalize('components/main'),
     absolute: modulePath,
     name: 'main',
     pkgName: 'preinstalled-main',
