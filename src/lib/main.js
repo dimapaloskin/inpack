@@ -1,4 +1,3 @@
-const debug = require('debug')('inpack:main');
 const InpackError = require('./utils/error');
 const init = require('./commands/init');
 const add = require('./commands/add');
@@ -11,7 +10,6 @@ class Inpack {
 
   constructor(options) {
 
-    debug('construct inpack');
     this.options = options || {};
     this.workingDir = process.cwd();
     this.currentDir = __dirname;
