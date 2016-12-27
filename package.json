@@ -1,6 +1,6 @@
 {
   "name": "inpack",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Nodejs invisible modules manager",
   "keywords": [
     "manager",
