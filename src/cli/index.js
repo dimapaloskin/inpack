@@ -44,7 +44,7 @@ module.exports = async () => {
     cli.showHelp();
   }
 
-  if (!availableCommads.includes(command)) {
+  if (availableCommads.indexOf(command) === -1) {
     console.log(`\n  Command "${command}" is not recognized`);
     cli.showHelp();
   }
