@@ -7,8 +7,9 @@ const isInpackJsonAccessible = async directory => {
 
   let isAccessible = true;
 
+  const R_OK = (fs.constants && fs.constants.R_OK) ? fs.constants.R_OK : 4;
   try {
-    await fs.accessAsync(join(directory, constants.inpackConfigName), fs.constants.R_OK);
+    await fs.accessAsync(join(directory, constants.inpackConfigName), R_OK);
   } catch (err) {
     isAccessible = false;
   }

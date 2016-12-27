@@ -73,8 +73,9 @@ export default async (options = {}) => {
     }
 
     if (options.structure) {
+      const R_OK = (fs.constants && fs.constants.R_OK) ? fs.constants.R_OK : 4;
       const structurePath = join(__dirname, constants.fixturesRelativePath, 'structures', options.structure);
-      await fs.accessAsync(structurePath, fs.constants.R_OK);
+      await fs.accessAsync(structurePath, R_OK);
       await fs.copyAsync(structurePath, sandboxPath);
     }
 

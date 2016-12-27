@@ -40,14 +40,16 @@ const modulePathResolver = async (directory, path, context) => {
       }
 
       try {
-        await fs.accessAsync(absoluteModulePath, fs.constants.R_OK);
+        const R_OK = (fs.constants && fs.constants.R_OK) ? fs.constants.R_OK : 4;
+        await fs.accessAsync(absoluteModulePath, R_OK);
         isReadable = true;
       } catch (err) {
         isReadable = false;
       }
 
       try {
-        await fs.accessAsync(absoluteModulePath, fs.constants.W_OK);
+        const W_OK = (fs.constants && fs.constants.W_OK) ? fs.constants.W_OK : 2;
+        await fs.accessAsync(absoluteModulePath, W_OK);
         isWritable = true;
       } catch (err) {
         isWritable = false;
