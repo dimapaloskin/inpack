@@ -1,6 +1,6 @@
 # Inpack [![npm version](https://badge.fury.io/js/inpack.svg)](https://www.npmjs.com/package/inpack) [![Build Status](https://travis-ci.org/dimapaloskin/inpack.svg?branch=master)](https://travis-ci.org/dimapaloskin/inpack) [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
-Inpack is a cli tool that makes it possible to use any directory as a Node.js module. It helps in avoiding long relative paths (like ```import responseParser from '../../../utils/responseParser'```) in your "require" or "import" without creating any additional files apart from its own config file called inpack.json. Also provokes build more clean and clear project architecture.
+Inpack is a cli tool that makes it possible to use any directory as a Node.js module. It helps in avoiding long relative paths (like ```import responseParser from '../../../utils/responseParser'```) in your "require" or "import" without creating any additional files apart from its own config file called inpack.json. Also provokes build more clean and clear project architecture. You can use inpack with [depy](https://github.com/dimapaloskin/depy).
 
 ### Spoiler
 
@@ -44,7 +44,7 @@ Use next command in the project’s root directory (valid package.json is requir
 ```bash
 ~/Project $ inpack init
 ```
-
+You
 It will create inpack.json.
 
 Use "add" to add existing directory as a Node.js module and save data to inpack.json:
