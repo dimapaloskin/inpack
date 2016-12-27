@@ -24,7 +24,7 @@
   "main": "dist/index.js",
   "bin": "cli.js",
   "engines": {
-    "node": ">=6"
+    "node": ">=4"
   },
   "scripts": {
     "build": "npm run build-lib && npm run build-cli",
