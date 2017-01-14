@@ -4,9 +4,8 @@ const fs = require('./../utils/fs');
 const constants = require('./../constants');
 const InpackError = require('./../utils/error');
 
-const getInstallCommand = function (previous) {
+const getInstallCommand = function (command) {
 
-  let command = previous;
   if (!command) {
     command = constants.postinstallCommand;
   } else if (typeof command === 'string' && !command.startsWith(constants.postinstallCommand)) {
